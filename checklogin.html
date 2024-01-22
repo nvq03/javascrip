@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    padding: 20px;
+  }
+
+  form {
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  input[type="email"],
+  input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+
+  .submit {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .error-message {
+    color: red;
+    margin-top: 5px;
+  }
+</style>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <form action="">
+    <input type="email" id="email" name="email" placeholder="Nhập Email" 
+           onkeyup="checkEmail(this.value)"><br>
+    <span id="r_email" class="error-message"></span>
+    <input type="password" id="password" name="password" placeholder="Nhập Password" 
+           onkeyup="checkPassword(this.value)"><br>
+    <span id="r_password" class="error-message"></span><br />
+    <input onclick="submitForm()" class="submit" type="submit" value="submit"></input>
+ </form>
+</body>
+</html>
+
+<script>
+      function checkPassword(password) {
+        var regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+        if (regex.test(password)) {
+          document.getElementById("r_password").textContent = " ";
+          return true;
+        } else {
+          document.getElementById("r_password").textContent =
+            "Password phải có ít nhất một chữ cái in hoa, ít nhất một số, ít nhất một chữ cái thường, và có ít nhất tám ký tự";
+          return false;
+        }
+      }
+      
+      function checkEmail(email) {
+        var regex = /^(?=.*[0-9])(?=.*[a-zA-Z]).*@gmail\.com$/;
+        if (regex.test(email)) {
+          document.getElementById("r_email").textContent = " ";
+          return true;
+        } else {
+          document.getElementById("r_email").textContent =
+            "Email phải chứa ít nhất một số, một chữ cái, và kết thúc bằng @gmail.com";
+          return false;
+        }
+      }
+
+      function submitForm() {
+    var emailValue = document.getElementById("email").value;
+    var passwordValue = document.getElementById("password").value;
+    
+    // Kiểm tra email và mật khẩu không được để trống
+    if (emailValue === "") {
+      alert("Email không được để trống");
+      return;
+    }
+    if (passwordValue === "") {
+      alert("Mật khẩu không được để trống");
+      return;
+    }
+    
+    // Kiểm tra email và mật khẩu hợp lệ
+    if (!checkEmail(emailValue) || !checkPassword(passwordValue)) {
+      return;
+    }
+    
+    // Kiểm tra email và mật khẩu có khớp với dữ liệu trong object info không
+    if (emailValue === info.email && passwordValue === info.matkhau) {
+      alert("Đăng nhập thành công");
+    } else {
+      alert("Email hoặc mật khẩu không chính xác");
+    }
+    
+    // Xóa giá trị trong các trường input và thông báo lỗi
+    document.getElementById("email").value = "";
+    document.getElementById("password").value = "";
+    document.getElementById("r_email").textContent = "";
+    document.getElementById("r_password").textContent = "";
+  }
+
+  // Đối tượng chứa email và mật khẩu mẫu
+  const info = {
+    email: "example1@gmail.com",
+    matkhau: "Password123",
+  };
+</script>
